@@ -1,5 +1,5 @@
 package com.infotaxes.pojos;
-// Generated 8/06/2015 03:52:10 PM by Hibernate Tools 4.3.1
+// Generated 8/06/2015 05:19:51 PM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;

@@ -1,5 +1,5 @@
 package com.infotaxes.pojos;
-// Generated 8/06/2015 03:52:10 PM by Hibernate Tools 4.3.1
+// Generated 8/06/2015 05:19:51 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -27,6 +27,7 @@ public class Servicio  implements java.io.Serializable {
      private String descripcion;
      private double valor;
      private Set horasuses = new HashSet(0);
+     private Set estadisticas = new HashSet(0);
 
     public Servicio() {
     }
@@ -35,10 +36,11 @@ public class Servicio  implements java.io.Serializable {
     public Servicio(double valor) {
         this.valor = valor;
     }
-    public Servicio(String descripcion, double valor, Set horasuses) {
+    public Servicio(String descripcion, double valor, Set horasuses, Set estadisticas) {
        this.descripcion = descripcion;
        this.valor = valor;
        this.horasuses = horasuses;
+       this.estadisticas = estadisticas;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -80,6 +82,15 @@ public class Servicio  implements java.io.Serializable {
     
     public void setHorasuses(Set horasuses) {
         this.horasuses = horasuses;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="servicio")
+    public Set getEstadisticas() {
+        return this.estadisticas;
+    }
+    
+    public void setEstadisticas(Set estadisticas) {
+        this.estadisticas = estadisticas;
     }
 
 

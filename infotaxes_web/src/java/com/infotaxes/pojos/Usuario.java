@@ -1,5 +1,5 @@
 package com.infotaxes.pojos;
-// Generated 8/06/2015 03:52:10 PM by Hibernate Tools 4.3.1
+// Generated 8/06/2015 05:19:51 PM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
@@ -19,7 +19,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name="usuario"
     ,catalog="infotaxes"
-    , uniqueConstraints = @UniqueConstraint(columnNames="correo") 
+    , uniqueConstraints = {@UniqueConstraint(columnNames="login"), @UniqueConstraint(columnNames="clave"), @UniqueConstraint(columnNames="correo")} 
 )
 public class Usuario  implements java.io.Serializable {
 
@@ -32,32 +32,32 @@ public class Usuario  implements java.io.Serializable {
      private String rol;
      private String login;
      private String clave;
-     private Integer estado;
+     private boolean estado;
 
     public Usuario() {
     }
 
-    public Usuario(Territorio territorio, String nombre, String apellido, String correo, String rol, String login, String clave, Integer estado) {
+	
+    public Usuario(Territorio territorio, String nombre, String apellido, String rol, String login, String clave, boolean estado) {
         this.territorio = territorio;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.correo = correo;
         this.rol = rol;
         this.login = login;
         this.clave = clave;
         this.estado = estado;
     }
-
-    public Usuario(Territorio territorio, String nombre, String apellido, String rol, String login, String clave, Integer estado) {
-        this.territorio = territorio;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.rol = rol;
-        this.login = login;
-        this.clave = clave;
-        this.estado = estado;
-    }	
-  
+    public Usuario(Territorio territorio, String nombre, String apellido, String correo, String rol, String login, String clave, boolean estado) {
+       this.territorio = territorio;
+       this.nombre = nombre;
+       this.apellido = apellido;
+       this.correo = correo;
+       this.rol = rol;
+       this.login = login;
+       this.clave = clave;
+       this.estado = estado;
+    }
+   
      @Id @GeneratedValue(strategy=IDENTITY)
 
     
@@ -119,6 +119,39 @@ public class Usuario  implements java.io.Serializable {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
+    
+    @Column(name="login", unique=true, nullable=false, length=45)
+    public String getLogin() {
+        return this.login;
+    }
+    
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    
+    @Column(name="clave", unique=true, nullable=false, length=128)
+    public String getClave() {
+        return this.clave;
+    }
+    
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    
+    @Column(name="estado", nullable=false)
+    public boolean isEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+
+
 
 }
 

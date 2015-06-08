@@ -1,5 +1,5 @@
 package com.infotaxes.pojos;
-// Generated 8/06/2015 03:52:10 PM by Hibernate Tools 4.3.1
+// Generated 8/06/2015 05:19:51 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -35,6 +35,7 @@ public class Sucursal  implements java.io.Serializable {
      private String direccion;
      private String telefono;
      private String correo;
+     private Set estadisticas = new HashSet(0);
      private Set horasuses = new HashSet(0);
 
     public Sucursal() {
@@ -47,7 +48,7 @@ public class Sucursal  implements java.io.Serializable {
         this.nombre = nombre;
         this.direccion = direccion;
     }
-    public Sucursal(Territorio territorio, Tipo tipo, String nombre, String descripcion, String direccion, String telefono, String correo, Set horasuses) {
+    public Sucursal(Territorio territorio, Tipo tipo, String nombre, String descripcion, String direccion, String telefono, String correo, Set estadisticas, Set horasuses) {
        this.territorio = territorio;
        this.tipo = tipo;
        this.nombre = nombre;
@@ -55,6 +56,7 @@ public class Sucursal  implements java.io.Serializable {
        this.direccion = direccion;
        this.telefono = telefono;
        this.correo = correo;
+       this.estadisticas = estadisticas;
        this.horasuses = horasuses;
     }
    
@@ -138,6 +140,15 @@ public class Sucursal  implements java.io.Serializable {
     
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="sucursal")
+    public Set getEstadisticas() {
+        return this.estadisticas;
+    }
+    
+    public void setEstadisticas(Set estadisticas) {
+        this.estadisticas = estadisticas;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="sucursal")
