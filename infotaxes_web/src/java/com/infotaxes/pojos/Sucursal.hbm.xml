@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 8/06/2015 03:52:12 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.infotaxes.pojos.Sucursal" table="sucursal" catalog="infotaxes" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="territorio" class="com.infotaxes.pojos.Territorio" fetch="select">
+            <column name="territorio_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipo" class="com.infotaxes.pojos.Tipo" fetch="select">
+            <column name="tipo_id" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="95" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="128" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="95" not-null="true" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="15" />
+        </property>
+        <property name="correo" type="string">
+            <column name="correo" length="45" unique="true" />
+        </property>
+        <set name="horasuses" table="horasuse" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sucursal_id" not-null="true" />
+            </key>
+            <one-to-many class="com.infotaxes.pojos.Horasuse" />
+        </set>
+    </class>
+</hibernate-mapping>

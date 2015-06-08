@@ -7,5 +7,11 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/infotaxes?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
+    <mapping resource="com/infotaxes/pojos/Sucursal.hbm.xml"/>
+    <mapping resource="com/infotaxes/pojos/Usuario.hbm.xml"/>
+    <mapping resource="com/infotaxes/pojos/Territorio.hbm.xml"/>
+    <mapping resource="com/infotaxes/pojos/Servicio.hbm.xml"/>
+    <mapping resource="com/infotaxes/pojos/Tipo.hbm.xml"/>
+    <mapping resource="com/infotaxes/pojos/Horasuse.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 8/06/2015 03:52:12 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.infotaxes.pojos.Usuario" table="usuario" catalog="infotaxes" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="territorio" class="com.infotaxes.pojos.Territorio" fetch="select">
+            <column name="territorio_id" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="75" not-null="true" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="apellido" length="65" not-null="true" />
+        </property>
+        <property name="correo" type="string">
+            <column name="correo" length="65" unique="true" />
+        </property>
+        <property name="rol" type="string">
+            <column name="rol" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
