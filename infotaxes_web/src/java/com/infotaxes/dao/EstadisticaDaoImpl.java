@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> e6dd9d8a554ca0a899e23a4c74e6f39789fb187a
 package com.infotaxes.dao;
 
 import com.infotaxes.pojos.Estadistica;
