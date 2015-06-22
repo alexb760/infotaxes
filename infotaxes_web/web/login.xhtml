@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./layout/global.xhtml">
+
+            <ui:define name="top">
+                top
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="form">
+                    <div align="center">
+                        <p:messages id="growl" showDetail="true"></p:messages>
+                    <h:panelGrid columns="3" style="alignment-adjust: central">
+                        <p:outputLabel for="usuario" value="Usuario: " ></p:outputLabel>
+                        <p:inputText id="usuario" required="true" label="usuario" value="#{sessionBean.login}"
+                                     validatorMessage="Ingrese el usuario"></p:inputText>
+                        <p:message for="usuario"></p:message>
+                        
+                        <p:outputLabel for="contrasena" value="Contraseña: "></p:outputLabel>
+                        <p:password id="contrasena" required="true" label="contrasena" value="#{sessionBean.pwd}"
+                                    validatorMessage="Ingrese la contraseña"></p:password>
+                        <p:message for="contrasena"></p:message>
+                        
+                        <p:commandButton id="btnLogin" value="Entrar" update="growl" action="#{sessionBean.login()}"></p:commandButton>
+                        
+                        <p:commandButton value="Registrate" 
+                                         update=":frmRegistro:registroDetalle" 
+                                         oncomplete="PF('registroDialog').show()" 
+                                         icon="ui-icon-pencil" 
+                                         title="view">
+                                <f:setPropertyActionListener value="#{persona}" target="#{personaBean.persona}"/>
+                        </p:commandButton>
+                        
+                    </h:panelGrid>
+                    </div>
+                </h:form>
+                
+                           
+                <p:dialog header="Registrate en InfoTaxes" widgetVar="registroDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                   <h:form id="frmRegistro">
+                       <p:outputPanel id="registroDetalle" style="text-align: center">
+                        
+                            <p:panelGrid columns="3">
+
+                                <h:outputLabel for="nombre" value="Nombre: "/>
+                                <h:inputText id="nombre" label="Nombres" 
+                                             required="true" 
+                                             value="#{usuarioBean.usuario.nombre}"/>
+                                <h:message for="nombre"/>
+
+                                <h:outputLabel for="apellido" value="Apellidos: "/>
+                                <h:inputText id="apellido" 
+                                             label="Apellidos: " 
+                                             required="true" 
+                                             value="#{usuarioBean.usuario.apellido}"/>
+                                <h:message for="apellido"/>
+
+                                <h:outputLabel for="mail" value="Correo: "/>
+                                <h:inputText id="mail" 
+                                             label="Correo: " 
+                                             required="true" 
+                                             value="#{usuarioBean.usuario.correo}"/>
+                                <h:message for="mail"/>
+                                
+                                <h:outputLabel for="ci" value="Ciudad:" />
+                                <p:autoComplete  id="ci"
+                                                 dropdown="true"
+                                                 value="#{usuarioBean.usuario.territorio}"
+                                                 converter="TerritorioConverter"
+                                                 completeMethod="#{usuarioBean.getCiudad}"
+                                                   var="territorio"
+                                                   itemValue="#{territorio}"
+                                                   itemLabel="#{territorio.nombre}"
+                                                   forceSelection="true">/>
+                                  </p:autoComplete>
+                                 <h:message for="ci"/>
+                                
+                                
+                                <h:outputLabel for="login" value="Login: "/>
+                                <h:inputText id="login" 
+                                             label="Login: " 
+                                             required="true" 
+                                             value="#{usuarioBean.usuario.login}"
+                                             />
+                                <h:message for="login"/>
+                                
+                                
+                                <h:outputLabel for="clave" value="Clave: "/>
+                                <h:inputSecret id="clave" 
+                                               label="Clave: " 
+                                               required="true" 
+                                               value="#{usuarioBean.usuario.clave}"
+                                               maxlength="6"/>
+                                <h:message for="clave"/>
+                                
+                                <p:commandButton id="btnCrear" 
+                                                 value="Enviar" 
+                                                 actionListener="#{usuarioBean.guardar()}" 
+                                                 update=":form:growl"
+                                                 ajax="true" 
+                                                 oncomplete="PF('registroDialog').hide()"
+                                                 />
+
+                            </p:panelGrid>
+                    </p:outputPanel>
+                   </h:form>
+                </p:dialog>
+                
+            </ui:define>
+
+            <ui:define name="bottom">
+                bottom
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author KevinArnold
+ * @author Alexander Bravo
  */
 
 @WebFilter("*.xhtml")
@@ -43,8 +43,8 @@ public class sessionurlfilter implements Filter{
         
         String[] urlPermitidaSinSesion=new String[]
         {
-            "/faces/login.xhtml",
-            "/faces/index.xhtml"    
+            "/view/login.xhtml",
+            "/view/index.xhtml"    
         };
         
         boolean redireccionarPeticion;
@@ -58,7 +58,6 @@ public class sessionurlfilter implements Filter{
                 if(requestUrl.contains(item))
                 {
                     redireccionarPeticion=false;
-                    
                     break;
                 }
             }
@@ -70,7 +69,7 @@ public class sessionurlfilter implements Filter{
         
         if(redireccionarPeticion)
         {
-           res.sendRedirect(req.getContextPath()+"/faces/login.xhtml");
+           res.sendRedirect(req.getContextPath()+"/view/login.xhtml");
            
         }
         else

@@ -29,7 +29,7 @@ public class SessionBean implements Serializable {
     
     public SessionBean()  {
         HttpSession miSession=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-        miSession.setMaxInactiveInterval(60);
+        miSession.setMaxInactiveInterval(120);
     }
     
         
