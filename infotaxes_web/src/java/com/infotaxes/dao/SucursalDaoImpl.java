@@ -27,5 +27,24 @@ public class SucursalDaoImpl extends GenericDaoImpl<Sucursal, Integer> implement
 
         return q.list();
     }
+    
+    public List<?> CargarServiciosBySucursal() {
+        Query q;
+        try {
+            session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+
+            q = session.createQuery("select suc.id, suc.nombre, suc.direccion, suc.telefono, suc.correo, "
+                    + "suc.tipo.nombre, suc.territorio.nombre from Sucursal as suc" );
+
+            tx.commit();
+        } catch (HibernateException e) {
+            //list = null;
+            tx.rollback();
+            throw e;
+        }
+
+        return q.list();
+    }
 
 }
