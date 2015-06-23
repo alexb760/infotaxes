@@ -14,60 +14,83 @@
             </ui:define>
 
             <ui:define name="content">
-                <h:form id="frmEstadistica">
+                <div align="center">
+                    <h:form id="frmEstadistica" style="">
+                        <p:dataGrid var="estad" value="#{EstadisticasBean.LEstadisticas}" columns="1" 
+                                    style="border-style: hidden;">
+                            <f:facet name="header">
+                                Estadisticas de Sucursales
+                            </f:facet>
 
-                    <p:dataGrid var="estad" value="#{EstadisticasBean.LEstadisticas}" columns="1" style="border-style: none;">
-                        <f:facet name="header">
-                            Estadisticas de Sucursales
-                        </f:facet>
+                            <p:panel header="#{estad.sucursal.nombre}" style="border-style: hidden; width: 1300px;" >
+                                <p:panelGrid columns="4" style="border-style: hidden; width: 100%;">
+                                    <p:column width="60%">
+                                        <p:panelGrid columns="2" style="border-style: hidden; width: 100%">
+                                            <p:outputLabel value="Calificación: "></p:outputLabel>
+                                            <p:rating value="#{estad.valor}" readonly="true"></p:rating>
 
-                        <p:panel header="#{estad.sucursal.nombre}" style="border-style: hidden" >
-                            <p:panelGrid columns="4" style="border-style: hidden">
-                                <p:column>
-                                    <p:graphicImage value="#{FacesContext.getCurrentInstance().getExternalContext()}/Images/#{estad.sucursal.id}.png" width="130" height="130" cache="true"></p:graphicImage>
-                                </p:column>
-                                <p:column>
-                                    <p:panelGrid columns="2" style="border-style: hidden">
-                                        <p:outputLabel value="Calificación: "></p:outputLabel>
-                                        <p:rating value="#{estad.valor}" readonly="true"></p:rating>
+                                            <p:outputLabel value="Dirección: "></p:outputLabel>
+                                            <h:outputText value="#{estad.sucursal.direccion}"></h:outputText>
 
-                                        <p:outputLabel value="Dirección: "></p:outputLabel>
-                                        <h:outputText value="#{estad.sucursal.direccion}"></h:outputText>
+                                            <p:outputLabel value="Teléfono: "></p:outputLabel>
+                                            <h:outputText value="#{estad.sucursal.telefono}"></h:outputText>
 
-                                        <p:outputLabel value="Teléfono: "></p:outputLabel>
-                                        <h:outputText value="#{estad.sucursal.telefono}"></h:outputText>
-
-                                        <p:outputLabel value="Correo: "></p:outputLabel>
-                                        <h:outputText value="#{estad.sucursal.correo}"></h:outputText>
-                                    </p:panelGrid>
-                                </p:column>
-                                <p:column>
-                                    <p:panelGrid columns="1" style="border-style: hidden">
-                                        <p:column headerText="Desc">
-                                            <p:outputLabel value="Descripción" style="alignment-adjust: baseline"></p:outputLabel>
-                                        </p:column>
-                                        <h:outputText value="#{estad.sucursal.descripcion}"></h:outputText>
-                                    </p:panelGrid>
-                                </p:column>
-                                <p:column>
-                                    <p:commandButton value="Detalles" update=":frmDetalles:ServicioDetail" oncomplete="PF('dialogoDetalle').show()"></p:commandButton>
-                                </p:column>
-                            </p:panelGrid>
-                        </p:panel>
-                    </p:dataGrid>
-                </h:form>
-                <p:dialog header="Detalles" widgetVar="dialogoDetalle" modal="true">
-                    <h:form id="frmDetalles">
-                        <p:outputPanel id="ServicioDetail" style="text-align: center">
-                            <h:inputHidden value="#{estad.servicio.id}"></h:inputHidden>
-                            <p:dataGrid var="detalle" value="#{EstadisticasBean.LEstadisticaDetalle}" columns="1" style="border-style: none;" >
-                                <p:panelGrid columns="1">
-                                    <h:outputText value="#{detalle.valor}"></h:outputText>
+                                            <p:outputLabel value="Correo: "></p:outputLabel>
+                                            <h:outputText value="#{estad.sucursal.correo}"></h:outputText>
+                                        </p:panelGrid>
+                                    </p:column>
+                                    <p:column width="30%">
+                                        <p:panelGrid columns="1" style="border-style: hidden; width: 100%">
+                                            <p:column headerText="Desc">
+                                                <p:outputLabel value="Descripción" style="alignment-adjust: baseline"></p:outputLabel>
+                                            </p:column>
+                                            <h:outputText value="#{estad.sucursal.descripcion}"></h:outputText>
+                                        </p:panelGrid>
+                                    </p:column>
+                                    <p:column width="10%">
+                                        <p:commandButton value="Detalles" update=":frmDetalles:ServicioDetail" oncomplete="PF('dialogoDetalle').show()"
+                                                         action="#{EstadisticasBean.CargarDetalle(estad.sucursal.id)}"></p:commandButton>
+                                    </p:column>
                                 </p:panelGrid>
-                            </p:dataGrid>
-                        </p:outputPanel>
+                            </p:panel>
+                        </p:dataGrid>
                     </h:form>
-                </p:dialog>
+                    <p:dialog header="Detalles" widgetVar="dialogoDetalle" modal="true" resizable="false" width="500px">
+                        <h:form id="frmDetalles">
+                            <p:growl id="msgs" showDetail="true"></p:growl>
+                            <p:outputPanel id="ServicioDetail" style="text-align: left; width: 480px; border-style: hidden">
+                                <p:panelGrid id="panel" style="border-style: hidden">
+                                    <p:row id="row">
+                                        <p:column id="colServicio" style="width: 200px">
+                                            <p:dataTable id="dttServicio" var="detalle" value="#{EstadisticasBean.LEstadisticaDetalle}"
+                                                         selectionMode="single" selection="#{EstadisticasBean.servicio}" 
+                                                         rowKey="#{detalle.servicio.id}">
+                                                <p:ajax event="rowSelect" listener="#{EstadisticasBean.onRowSelect}" update=":frmDetalles:msgs" process="dttServicio"></p:ajax>
+                                                <p:ajax event="rowUnselect" listener="#{EstadisticasBean.onRowUnselect(event)}" update=":frmDetalles:msgs"></p:ajax>
+                                                <p:column width="100">
+                                                    <h:outputText value="#{detalle.servicio.descripcion}"></h:outputText>
+                                                </p:column>
+                                                <p:column width="80">
+                                                    <p:rating value="#{detalle.valor}" readonly="true"></p:rating>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </p:column>
+                                        <p:column id="colSerDetalle" style="width: 800px">
+                                            <p:dataScroller var="serDet" value="#{EstadisticasBean.LSerDetalle}" 
+                                                            chunkSize="10" mode="inline" scrollHeight="100" style="width: 100%">
+                                                <p:column>
+                                                    <h:outputText value="#{serDet.comentario}"></h:outputText>
+                                                    <br></br>
+                                                    <!--<p:rating value="#{serDet.valor}"></p:rating>-->
+                                                </p:column>
+                                            </p:dataScroller>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </h:form>
+                    </p:dialog>
+                </div>
             </ui:define>
 
             <ui:define name="bottom">
