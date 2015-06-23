@@ -5,15 +5,20 @@
         <param-value>Development</param-value>
     </context-param>
     <context-param>
-    <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
-    <param-value>6LetjQgTAAAAACPnXcSVfwvyL4NuOlX3iSRWi4qS</param-value>
-</context-param>
+        <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+        <param-value>6LetjQgTAAAAACPnXcSVfwvyL4NuOlX3iSRWi4qS</param-value>
+    </context-param>
 
-<context-param>
-    <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
-    <param-value>6LetjQgTAAAAAAS5aCkM12ICQj6Hn3e0P85OWa_i</param-value>
-</context-param>
-        <filter>
+    <context-param>
+        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+        <param-value>6LetjQgTAAAAAAS5aCkM12ICQj6Hn3e0P85OWa_i</param-value>
+    </context-param>
+    
+    <context-param>  
+        <param-name>primefaces.THEME</param-name>  
+        <param-value>start</param-value>  
+    </context-param>
+    <filter>
         <filter-name>sessionurlfilter</filter-name>
         <filter-class>com.agenda.bean.sessionurlfilter</filter-class>
     </filter>
@@ -21,7 +26,7 @@
         <filter-name>sessionurlfilter</filter-name>
         <url-pattern>/index.xhtml</url-pattern>
     </filter-mapping>
-        <servlet>
+    <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>

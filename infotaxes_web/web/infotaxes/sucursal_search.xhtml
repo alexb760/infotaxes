@@ -8,14 +8,36 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-        <ui:composition template="./layout/global.xhtml">
-            
+        <ui:composition template="./../layout/welcome.xhtml">
+
             <ui:define name="content">                
-                <h:form id="form">
+                <h:form id="form_sucursal_search">
                     <div align="center">
-                        <h:panelGrid columns="3" style="alignment-adjust: central">
-                            
-                        </h:panelGrid>
+                        <p:panel id="pn_info_sucursal" header="Información de Sucursales" toggleable="true">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:dataTable var="dt_infosucu" scrollable="true" scrollWidth="500" stickyHeader="true" value="#{sucursalBean.list_sucursal}">
+                                    <p:column headerText="Nombre" footerText="Nombre">
+                                        <h:outputText value="#{dt_infosucu.nombre}" />
+                                    </p:column>
+                                    <p:column headerText="Dirección" footerText="Dir">
+                                        <h:outputText value="#{dt_infosucu.direccion}" />
+                                    </p:column>
+                                    <p:column headerText="Télefono" footerText="Id">
+                                        <h:outputText value="#{dt_infosucu.telefono}" />
+                                    </p:column>
+                                    <p:column headerText="Correo" footerText="Id">
+                                        <h:outputText value="#{dt_infosucu.correo}" />
+                                    </p:column>
+                                    <p:column style="width: 32px;text-align: center">
+                                      <!--
+                                      <p:commandButton update=":frmEditar:PersonaDetail" oncomplete="PF('PersonaDialog').show()" icon="ui-icon-pencil" title="view">
+                                            <f:setPropertyActionListener value="#{dt_infosucu}" target="#{personaBean.persona}"/>
+                                        </p:commandButton>                                      
+                                      -->  
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGrid>
+                        </p:panel>
                     </div>                    
                 </h:form>
             </ui:define>

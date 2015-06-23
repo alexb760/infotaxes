@@ -1,16 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <body>
-        <div>TODO write content</div>
+        <ui:composition template="./layout/welcome.xhtml">
+
+            <ui:define name="content">                
+                <h:form id="form_sucursal_search">
+                    <div align="center">
+                        <p:panel id="pn_info_sucursal" header="Información de Sucursales" toggleable="true">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:outputLabel value="Aun estamos en contrucción ..."/>
+                            </h:panelGrid>
+                        </p:panel>
+                    </div>                    
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </body>
 </html>

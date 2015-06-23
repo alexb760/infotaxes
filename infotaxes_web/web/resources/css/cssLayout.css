@@ -1,9 +1,10 @@
 
 #top {
     position: relative;
-    background-color: #036fab;
-    color: white;
+    background-color: #ffffff;
+    color: #045491;
     padding: 5px;
+    font-family: sans-serif;
     margin: 0px 0px 10px 0px;
 }
 
@@ -30,9 +31,12 @@
 
 .center_content {
     position: relative;
-    background-color: #dddddd;
+    background-image: url(../img/background_img.png);
+    background-color: #ffffff;
     padding: 5px;
+    
 }
+
 
 .left_content {
     background-color: #dddddd;
@@ -47,7 +51,7 @@
 }
 
 #top a:link, #top a:visited {
-  color: white;
+  color: #045491;
   font-weight : bold;
   text-decoration: none;
 }
