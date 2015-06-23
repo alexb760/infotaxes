@@ -66,7 +66,9 @@
                                 <h:inputText id="mail" 
                                              label="Correo: " 
                                              required="true" 
-                                             value="#{usuarioBean.usuario.correo}"/>
+                                             value="#{usuarioBean.mail}"
+                                             validatorMessage="El correo no es correcto."/>
+                                             
                                 <h:message for="mail"/>
                                 
                                 <h:outputLabel for="ci" value="Ciudad:" />

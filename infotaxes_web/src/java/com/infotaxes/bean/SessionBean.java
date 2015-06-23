@@ -62,7 +62,9 @@ public class SessionBean implements Serializable {
                     httpSession.setAttribute("name", usuario.getNombre());
                     httpSession.setAttribute("lastname", usuario.getApellido());
                     loggedIn = true;
-                    context.addCallbackParam("loggedIn", loggedIn); 
+                    context.addCallbackParam("loggedIn", loggedIn);
+                    this.login = null;
+                    this.pwd = null;
                     return "/view/index.xhtml";
                 }
             }
