@@ -15,6 +15,7 @@ import com.infotaxes.pojos.Usuario;
 import com.infotaxes.dao.UsuarioDaoImpl;
 import com.infotaxes.util.Fantasma;
 import com.infotaxes.util.HibernateUtil;
+import org.primefaces.context.RequestContext;
 
 @ManagedBean
 @SessionScoped
@@ -29,7 +30,7 @@ public class SessionBean implements Serializable {
     
     public SessionBean()  {
         HttpSession miSession=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-        miSession.setMaxInactiveInterval(120);
+        miSession.setMaxInactiveInterval(300);
     }
     
         
@@ -53,12 +54,18 @@ public class SessionBean implements Serializable {
                 Fantasma secret = new Fantasma();
                 if(usuario.getClave().equals(secret.getStringMessageDigest(this.pwd,secret.getMD5())))
                 {
+                    boolean loggedIn = false; 
+                    RequestContext context = RequestContext.getCurrentInstance();
                     HttpSession httpSession=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
                     httpSession.setAttribute("login", this.login);
                     httpSession.setAttribute("mail", this.mail);
                     httpSession.setAttribute("name", usuario.getNombre());
                     httpSession.setAttribute("lastname", usuario.getApellido());
-                    return "/index";
+                    loggedIn = true;
+                    context.addCallbackParam("loggedIn", loggedIn);
+                    this.login = null;
+                    this.pwd = null;
+                    return "/view/index.xhtml";
                 }
             }
             

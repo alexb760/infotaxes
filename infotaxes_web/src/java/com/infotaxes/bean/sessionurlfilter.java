@@ -43,8 +43,8 @@ public class sessionurlfilter implements Filter{
         
         String[] urlPermitidaSinSesion=new String[]
         {
-            "/view/login.xhtml",
-            "/view/index.xhtml"    
+            "/view/login.xhtml"
+           // "/view/index.xhtml"    
         };
         
         boolean redireccionarPeticion;

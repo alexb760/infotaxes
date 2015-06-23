@@ -15,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.validation.constraints.Pattern;
 
 /**
  *
@@ -25,6 +26,8 @@ import javax.faces.context.FacesContext;
 public class UsuarioBean {
 
    private Usuario usuario;
+   @Pattern(regexp="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")
+   private String mail;
 
    @ManagedProperty("#{territorioImpl}")
    private Territorio territorio;
@@ -40,9 +43,11 @@ public class UsuarioBean {
             UsuarioDaoImpl usuarioImpl = new UsuarioDaoImpl();
             usuario.setRol("Usuario");
             usuario.setClave(ghost.getStringMessageDigest(usuario.getClave(), ghost.getMD5()));
+            usuario.setCorreo(mail);
             usuarioImpl.create(usuario);
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido a la Comunidad: ", this.usuario.getLogin());
             FacesContext.getCurrentInstance().addMessage(null, msg);
+            usuario = null;
         } catch (Exception e) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Inesperado: ", e.getMessage() + "\n " + e.getLocalizedMessage());
             FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -78,6 +83,14 @@ public class UsuarioBean {
 
     public void setTerritorioImpl(TerritorioDaoImpl territorioImpl) {
         this.territorioImpl = territorioImpl;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
     
     

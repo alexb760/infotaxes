@@ -19,7 +19,13 @@
         <div id="top">
             <ui:insert name="top">
                 <h:form>
-                    <p:growl id="messages"/>                    
+                    <p:growl id="messages"/>    
+                    <f:facet name="top">
+
+                        <p:graphicImage name="/resources/img/header-background2.jpg" />
+
+                    </f:facet>
+
                     <p:menubar>
                         <p:menuitem value="Inicio" url="index.xhtml" icon="ui-icon-home" />
                         <p:submenu label="Sucursal" icon="ui-icon-pencil">
@@ -29,9 +35,39 @@
                         <p:submenu label="Estadisticas" icon="ui-icon-comment">
                             <p:menuitem value="Comentarios por aprobar" url="/view/infotaxes/estadisticas.xhtml"/>
                         </p:submenu>
-                    </p:menubar>
+
+                        <f:facet name="options">
+                            <p:commandButton value="Login"  
+                                             oncomplete="PF('dlg').show()"
+                                             image="/resources/img/login.png"
+                                             title="view">
+                            </p:commandButton>
+                        </f:facet>
+                    </p:menubar>    
 
                 </h:form>
+                <p:dialog id="dialog" header="Login" widgetVar="dlg" modal="true" showEffect="fade" hideEffect="fade">
+                    <h:form id="login">
+                        <p:outputPanel id="registroDetalle" style="text-align: center">
+                            <p:growl id="growl" showDetail="true" life="3000" />
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="username" value="Username: *" />
+                                <p:inputText value="#{sessionBean.login}" 
+                                             id="username" required="true" label="username" />
+
+                                <h:outputLabel for="password" value="Password: * " />
+                                <h:inputSecret value="#{sessionBean.pwd}" 
+                                               id="password" required="true" label="password" />
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Login" update="growl" 
+                                                     actionListener="#{sessionBean.login()}" 
+                                                     oncomplete="handleLoginRequest(xhr, status, args)"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:form>
+                </p:dialog>
 
             </ui:insert>            
         </div>
@@ -43,7 +79,17 @@
         <div id="bottom" class="left_content">
             <ui:insert name="bottom">&copy;Copyright Infotaxes By Student's Uniajc</ui:insert>
         </div>
-
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                }
+                else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+        </script>
     </body>
 </html>
 
