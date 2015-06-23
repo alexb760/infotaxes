@@ -18,7 +18,7 @@ public class EstadisticaDaoImpl extends GenericDaoImpl<Estadistica, Integer> imp
 
             q = session.createQuery("Select Sucursal.id, avg(est.valor), "
                     + "Sucursal.nombre, Sucursal.direccion, Sucursal.telefono, "
-                    + "Sucursal.correo, Sucursal.direccion\n"
+                    + "Sucursal.correo, Sucursal.descripcion\n"
                     + "from Estadistica as est\n"
                     + "inner join est.sucursal as Sucursal\n"
                     + "group by est.sucursal\n"
@@ -34,7 +34,7 @@ public class EstadisticaDaoImpl extends GenericDaoImpl<Estadistica, Integer> imp
         return q.list();
     }
 
-    public List<?> CargarDetalle() {
+    public List<?> CargarDetalle(int idSucursal) {
         Query q;
         try {
             session = HibernateUtil.getSession();
@@ -44,7 +44,7 @@ public class EstadisticaDaoImpl extends GenericDaoImpl<Estadistica, Integer> imp
                     + "Servicio.descripcion, est.comentario, \n"
                     + "Servicio.valor From Estadistica as est\n"
                     + "inner join est.servicio as Servicio\n"
-                    + "Where est.sucursal = 1\n"
+                    + "Where est.sucursal = " + idSucursal + "\n"
                     + "group by est.servicio");
 
             tx.commit();

@@ -13,19 +13,18 @@
             <ui:define name="content">                
                 <h:form id="form_sucursal_search">
                     <div align="center">
-                        <p:panel id="pn_info_sucursal" header="Información de Sucursales" toggleable="true">
-                            <h:panelGrid columns="2" cellpadding="10">
-                                <p:dataTable var="dt_infosucu" scrollable="true" scrollWidth="500" stickyHeader="true" value="#{sucursalBean.list_sucursal}">
-                                    <p:column headerText="Nombre" footerText="Nombre">
+                        <p:panel id="pn_info_sucursal" header="Información de Sucursales" toggleable="true">                           
+                                <p:dataTable var="dt_infosucu" scrollable="true" scrollHeight="150" value="#{sucursalBean.list_sucursal}">
+                                    <p:column headerText="Nombre" >
                                         <h:outputText value="#{dt_infosucu.nombre}" />
                                     </p:column>
-                                    <p:column headerText="Dirección" footerText="Dir">
+                                    <p:column headerText="Dirección">
                                         <h:outputText value="#{dt_infosucu.direccion}" />
                                     </p:column>
-                                    <p:column headerText="Télefono" footerText="Id">
+                                    <p:column headerText="Télefono" >
                                         <h:outputText value="#{dt_infosucu.telefono}" />
                                     </p:column>
-                                    <p:column headerText="Correo" footerText="Id">
+                                    <p:column headerText="Correo" >
                                         <h:outputText value="#{dt_infosucu.correo}" />
                                     </p:column>
                                     <p:column style="width: 32px;text-align: center">
@@ -35,8 +34,7 @@
                                         </p:commandButton>                                      
                                       -->  
                                     </p:column>
-                                </p:dataTable>
-                            </h:panelGrid>
+                                </p:dataTable>                            
                         </p:panel>
                     </div>                    
                 </h:form>

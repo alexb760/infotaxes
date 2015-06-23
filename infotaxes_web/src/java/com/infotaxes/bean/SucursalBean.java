@@ -11,6 +11,7 @@ import com.infotaxes.pojos.Territorio;
 import com.infotaxes.pojos.Tipo;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -23,9 +24,14 @@ public class SucursalBean {
     public List<Sucursal> list_sucursal;
     
     public SucursalBean() {
-        cargarObjetos();
+       // cargarObjetos();
     
     }  
+    
+    @PostConstruct
+    public void init(){
+        //cargarObjetos();
+    }
     
     public void cargarObjetos() {
         SucursalDaoImpl sucuDao = new SucursalDaoImpl();
