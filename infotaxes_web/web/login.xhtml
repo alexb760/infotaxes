@@ -20,12 +20,12 @@
                         <p:messages id="growl" showDetail="true"></p:messages>
                     <h:panelGrid columns="3" style="alignment-adjust: central">
                         <p:outputLabel for="usuario" value="Usuario: " ></p:outputLabel>
-                        <p:inputText id="usuario" required="true" label="usuario" value="#{sessionBean.login}"
+                        <p:inputText id="usuario"  label="usuario" value="#{sessionBean.login}"
                                      validatorMessage="Ingrese el usuario"></p:inputText>
                         <p:message for="usuario"></p:message>
                         
                         <p:outputLabel for="contrasena" value="Contraseña: "></p:outputLabel>
-                        <p:password id="contrasena" required="true" label="contrasena" value="#{sessionBean.pwd}"
+                        <p:password id="contrasena"  label="contrasena" value="#{sessionBean.pwd}"
                                     validatorMessage="Ingrese la contraseña"></p:password>
                         <p:message for="contrasena"></p:message>
                         
@@ -36,7 +36,6 @@
                                          oncomplete="PF('registroDialog').show()" 
                                          icon="ui-icon-pencil" 
                                          title="view">
-                                <f:setPropertyActionListener value="#{persona}" target="#{personaBean.persona}"/>
                         </p:commandButton>
                         
                     </h:panelGrid>
@@ -47,8 +46,8 @@
                 <p:dialog header="Registrate en InfoTaxes" widgetVar="registroDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                    <h:form id="frmRegistro">
                        <p:outputPanel id="registroDetalle" style="text-align: center">
-                        
-                            <p:panelGrid columns="3">
+                           <p:messages id="msg" showDetail="true" autoUpdate="true" />
+                           <p:panelGrid columns="3" id="Grid">
 
                                 <h:outputLabel for="nombre" value="Nombre: "/>
                                 <h:inputText id="nombre" label="Nombres" 
@@ -89,24 +88,34 @@
                                              label="Login: " 
                                              required="true" 
                                              value="#{usuarioBean.usuario.login}"
+                                             requiredMessage="Debe digitar un login"
                                              />
                                 <h:message for="login"/>
                                 
                                 
                                 <h:outputLabel for="clave" value="Clave: "/>
-                                <h:inputSecret id="clave" 
+                                <p:password id="clave" 
                                                label="Clave: " 
-                                               required="true" 
+                                               required="true"
+                                               match="clave2"
                                                value="#{usuarioBean.usuario.clave}"
-                                               maxlength="6"/>
+                                               feedback="true"
+                                               requiredMessage="Debe Digitar una contraseña"
+                                               validatorMessage="La contraseña no son iguales"/>
+                                <h:message for="clave"/>
+                                
+                                <h:outputLabel for="clave2" value="Confirmar: "/>
+                                <p:password id="clave2" 
+                                               label="Confirmar: " 
+                                               required="true" 
+                                               value="#{usuarioBean.usuario.clave}"/>
                                 <h:message for="clave"/>
                                 
                                 <p:commandButton id="btnCrear" 
                                                  value="Enviar" 
                                                  actionListener="#{usuarioBean.guardar()}" 
-                                                 update=":form:growl"
-                                                 ajax="true" 
-                                                 oncomplete="PF('registroDialog').hide()"
+                                                 update="msg"
+                                                 ajax="false"
                                                  />
 
                             </p:panelGrid>

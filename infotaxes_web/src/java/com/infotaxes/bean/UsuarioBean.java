@@ -34,14 +34,19 @@ public class UsuarioBean {
         usuario = new Usuario();
     }
     
-    public void guardar() throws Exception{
-        Fantasma ghost = new Fantasma();
-        UsuarioDaoImpl usuarioImpl = new UsuarioDaoImpl();
-        usuario.setRol("Usuario");
-        usuario.setClave(ghost.getStringMessageDigest(usuario.getClave(), ghost.getMD5()));
-        usuarioImpl.create(usuario);
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido a la Comunidad: ", this.usuario.getLogin());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void guardar() throws Exception {
+        try {
+            Fantasma ghost = new Fantasma();
+            UsuarioDaoImpl usuarioImpl = new UsuarioDaoImpl();
+            usuario.setRol("Usuario");
+            usuario.setClave(ghost.getStringMessageDigest(usuario.getClave(), ghost.getMD5()));
+            usuarioImpl.create(usuario);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido a la Comunidad: ", this.usuario.getLogin());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Inesperado: ", e.getMessage() + "\n " + e.getLocalizedMessage());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
     }
     
     public List<Territorio> getCiudad(String Query){
