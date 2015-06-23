@@ -14,27 +14,48 @@
                 <h:form id="form_sucursal_search">
                     <div align="center">
                         <p:panel id="pn_info_sucursal" header="Información de Sucursales" toggleable="true">                           
-                                <p:dataTable var="dt_infosucu" scrollable="true" scrollHeight="150" value="#{sucursalBean.list_sucursal}">
-                                    <p:column headerText="Nombre" >
-                                        <h:outputText value="#{dt_infosucu.nombre}" />
-                                    </p:column>
-                                    <p:column headerText="Dirección">
-                                        <h:outputText value="#{dt_infosucu.direccion}" />
-                                    </p:column>
-                                    <p:column headerText="Télefono" >
-                                        <h:outputText value="#{dt_infosucu.telefono}" />
-                                    </p:column>
-                                    <p:column headerText="Correo" >
-                                        <h:outputText value="#{dt_infosucu.correo}" />
-                                    </p:column>
-                                    <p:column style="width: 32px;text-align: center">
-                                      <!--
-                                      <p:commandButton update=":frmEditar:PersonaDetail" oncomplete="PF('PersonaDialog').show()" icon="ui-icon-pencil" title="view">
-                                            <f:setPropertyActionListener value="#{dt_infosucu}" target="#{personaBean.persona}"/>
-                                        </p:commandButton>                                      
-                                      -->  
-                                    </p:column>
-                                </p:dataTable>                            
+                            <p:dataTable var="dt_infosucu" scrollable="true" scrollHeight="150" value="#{sucursalBean.list_sucursal}">
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{dt_infosucu.nombre}" />
+                                </p:column>
+                                <p:column headerText="Dirección">
+                                    <h:outputText value="#{dt_infosucu.direccion}" />
+                                </p:column>
+                                <p:column headerText="Télefono" >
+                                    <h:outputText value="#{dt_infosucu.telefono}" />
+                                </p:column>
+                                <p:column headerText="Correo" >
+                                    <h:outputText value="#{dt_infosucu.correo}" />
+                                </p:column>
+                                <p:column headerText="Ciudad" >
+                                    <h:outputText value="#{dt_infosucu.territorio.nombre}" />
+                                </p:column>
+                                <p:column style="width: 32px;text-align: center">
+                                    <!--
+                                    <p:commandButton update=":frmEditar:PersonaDetail" oncomplete="PF('PersonaDialog').show()" icon="ui-icon-pencil" title="view">
+                                          <f:setPropertyActionListener value="#{dt_infosucu}" target="#{personaBean.persona}"/>
+                                      </p:commandButton>                                      
+                                    -->  
+                                </p:column>
+                            </p:dataTable>                            
+                        </p:panel>
+
+                        <!-- Panel de informacion detallada para los servicios de una sucursal -->
+                        <p:panel id="pn_info_servicios" header="Información de Servicios" toggleable="true">   
+                            <p:panelGrid columns="2" >
+                                <p:outputLabel value="Sucursal seleccionada :"/>
+                                <p:outputLabel value="#{dt_infosucu.nombre}"/>                                
+                            </p:panelGrid>
+                            
+                            <p:dataTable var="dt_infosucu" scrollable="true" scrollHeight="150" value="#{sucursalBean.list_sucursal}">
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{dt_infosucu.nombre}" />
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{dt_infosucu.nombre}" />
+                                </p:column>                                
+                            </p:dataTable>
+
                         </p:panel>
                     </div>                    
                 </h:form>

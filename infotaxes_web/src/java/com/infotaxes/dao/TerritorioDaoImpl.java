@@ -14,15 +14,35 @@ import java.util.List;
  *
  * @author usuario
  */
-public class TerritorioDaoImpl extends GenericDaoImpl<Territorio, Integer> implements TerritorioDao{
- 
-        public List<Territorio> getbyName(String name){
+public class TerritorioDaoImpl extends GenericDaoImpl<Territorio, Integer> implements TerritorioDao {
+
+    public List<Territorio> getbyName(String name) {
         List<Territorio> ciudad = new ArrayList<Territorio>();
-        for(Territorio ci : super.findAll()){
-            if(ci.getNombre().toLowerCase().startsWith(name.toLowerCase()))
+        for (Territorio ci : super.findAll()) {
+            if (ci.getNombre().toLowerCase().startsWith(name.toLowerCase())) {
                 ciudad.add(ci);
+            }
         }
         return ciudad;
     }
-    
+
+    /**
+     * Metodo para realizar la consulta de territorios por tipo
+     *
+     * @param name
+     * @return
+     */
+    public List<Territorio> getbyType(String tipo) {
+        List<Territorio> ciudad = new ArrayList<Territorio>();
+        for (Territorio ci : super.findAll()) {
+
+            if (ci.getTipo().equals("C")) {
+                if (ci.getNombre().toUpperCase().startsWith(tipo.toUpperCase())) {
+                    ciudad.add(ci);
+                }
+            }
+        }
+        return ciudad;
+    }
+
 }

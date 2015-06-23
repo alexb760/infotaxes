@@ -6,14 +6,19 @@
 package com.infotaxes.bean;
 
 import com.infotaxes.dao.SucursalDaoImpl;
+import com.infotaxes.dao.TerritorioDaoImpl;
+import com.infotaxes.dao.TipoDaoImpl;
 import com.infotaxes.pojos.Sucursal;
 import com.infotaxes.pojos.Territorio;
 import com.infotaxes.pojos.Tipo;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 
 @ManagedBean(name = "sucursalBean")
@@ -22,6 +27,16 @@ public class SucursalBean {
     
     public Sucursal sucursal;
     public List<Sucursal> list_sucursal;
+    public Sucursal create_suc;
+    public List<Territorio> list_ciudad;
+    
+    @ManagedProperty("#{territorioImpl2}")
+    private TerritorioDaoImpl territorioImpl;
+    private Territorio territorio;
+    
+    @ManagedProperty("#{tipoImpl}")
+    private TipoDaoImpl tipoDaoImpl;
+    private Tipo tipo;
     
     public SucursalBean() {
        // cargarObjetos();
@@ -62,6 +77,70 @@ public class SucursalBean {
         
         
     }
+    
+    public void guardar() throws Exception {
+        try {
+            
+            SucursalDaoImpl sucursalImpl = new SucursalDaoImpl();
+           
+            sucursalImpl.create(sucursal);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha creado sucursal : ", this.sucursal.getNombre());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            sucursal = null;
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Inesperado: ", e.getMessage() + "\n " + e.getLocalizedMessage());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
+    public void limpiar_Create(){
+        
+        sucursal = null;
+        getCiudades("");
+        getTipos();
+        
+    }
+    
+    public List<Territorio> getCiudades(String query){
+        territorioImpl = new TerritorioDaoImpl();
+        return territorioImpl.getbyType(query);
+    }
+    
+    public List<Tipo> getTipos(){
+        tipoDaoImpl = new TipoDaoImpl();
+        return tipoDaoImpl.findAll();
+    }
+
+    public TipoDaoImpl getTipoDaoImpl() {
+        return tipoDaoImpl;
+    }
+
+    public void setTipoDaoImpl(TipoDaoImpl tipoDaoImpl) {
+        this.tipoDaoImpl = tipoDaoImpl;
+    }
+
+    public List<Territorio> getList_ciudad() {
+        return list_ciudad;
+    }
+
+    public void setList_ciudad(List<Territorio> list_ciudad) {
+        this.list_ciudad = list_ciudad;
+    }
+
+    public Territorio getTerritorio() {
+        return territorio;
+    }
+
+    public void setTerritorio(Territorio territorio) {
+        this.territorio = territorio;
+    }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
 
     public Sucursal getSucursal() {
         return sucursal;
@@ -78,6 +157,20 @@ public class SucursalBean {
     public void setList_sucursal(List<Sucursal> list_sucursal) {
         this.list_sucursal = list_sucursal;
     }
+
+    public Sucursal getCreate_suc() {
+        return create_suc;
+    }
+
+    public void setCreate_suc(Sucursal create_suc) {
+        this.create_suc = create_suc;
+    }
     
-    
+    public TerritorioDaoImpl getTerritorioImpl() {
+        return territorioImpl;
+    }
+
+    public void setTerritorioImpl(TerritorioDaoImpl territorioImpl) {
+        this.territorioImpl = territorioImpl;
+    }
 }

@@ -8,14 +8,74 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-        <ui:composition template="./layout/welcome.xhtml">
+        <ui:composition template="./../layout/welcome.xhtml">
 
-            <ui:define name="content">                
+            <ui:define name="content" class="center_content">                
                 <h:form id="form_sucursal_search">
                     <div align="center">
                         <p:panel id="pn_info_sucursal" header="Información de Sucursales" toggleable="true">
-                            <h:panelGrid columns="2" cellpadding="10">
-                                <p:outputLabel value="Aun estamos en contrucción ..."/>
+                            <h:panelGrid columns="4" >                   
+                                <h:graphicImage url="../resources/img/ico_new.png"/>
+                                <h:panelGrid columns="3" cellpadding="10">
+
+                                    <p:outputLabel value="Nombre :" for="txtNombre"/>
+                                    <p:inputText id="txtNombre"  required="true" value="#{sucursalBean.create_suc.nombre}"/>
+                                    <h:message for="txtNombre"/>
+
+                                    <p:outputLabel value="Teléfono :" for="txtTelefono"/>
+                                    <p:inputText id="txtTelefono" required="true" value="#{sucursalBean.create_suc.telefono}"/>
+                                    <h:message for="txtTelefono"/>
+
+                                    <p:outputLabel value="Descripción :" for="txtDescripcion"/>
+                                    <p:inputTextarea  id="txtDescripcion" rows="5" cols="20" 
+                                                      value="#{sucursalBean.create_suc.descripcion}" maxlength="200"/>
+                                    <h:message for="Descripción"/>
+
+                                    <p:outputLabel value="Correo :" for="txtCorreo"/>
+                                    <p:inputText id="txtCorreo" value="#{sucursalBean.create_suc.correo}"/>
+                                    <h:message for="txtCorreo"/>
+
+                                    <p:outputLabel value="Ciudad :" />
+                                    <p:autoComplete id="item_ciudad_sucursal"
+                                                    dropdown="true"
+                                                    converter="TerritorioConverter"
+                                                    value="#{sucursalBean.create_suc.territorio}"
+                                                    completeMethod="#{sucursalBean.getCiudades}"
+                                                    var="ciudad"
+                                                    itemValue="#{territorio}"
+                                                    itemLabel="#{territorio.nombre}"
+                                                    forceSelection="true">
+                                    </p:autoComplete>
+                                    <br/>
+
+                                    <p:outputLabel value="Tipo de Sucursal *:" />
+                                    <p:autoComplete id="item_tipo_sucursal"
+                                                    dropdown="true"
+                                                    converter="TipoConverter"
+                                                    value="#{sucursalBean.create_suc.tipo}"
+                                                    completeMethod="#{sucursalBean.getTipos}"
+                                                    var="tipo"
+                                                    itemValue="#{tipo}"
+                                                    itemLabel="#{tipo.nombre}"
+                                                    forceSelection="true">
+                                    </p:autoComplete>
+                                    <br/>
+
+                                    <p:commandButton id="btnLimpiar" 
+                                                     value="Limpiar" 
+                                                     actionListener="#{sucursalBean.limpiar_Create()}" 
+                                                     ajax="true"
+                                                     icon="ui-icon-refresh"
+                                                     />
+                                    <p:commandButton id="btnCrear" 
+                                                     value="Enviar" 
+                                                     actionListener="#{sucursalBean.guardar()}" 
+                                                     update="msg"
+                                                     icon="ui-icon-document"
+                                                     ajax="true"
+                                                     />
+                                    <p:messages id="msg" showDetail="true" autoUpdate="true" />
+                                </h:panelGrid>
                             </h:panelGrid>
                         </p:panel>
                     </div>                    
