@@ -15,8 +15,11 @@ import javax.faces.bean.RequestScoped;
 public class EstadisticasBean {
 
     private Estadistica estadistica;
+    private Servicio servicio;
     private List<Estadistica> LEstadisticas;
     private List<Estadistica> LEstadisticaDetalle;
+    private List<Servicio> SelectedServicio;
+    private List<Estadistica> LSerDetalle;
 
     public EstadisticasBean() {
     }
@@ -24,7 +27,7 @@ public class EstadisticasBean {
     @PostConstruct
     public void init() {
         CargarObjetos();
-        CargarDetalle();
+        //CargarDetalle();
     }
 
     public void CargarObjetos() {
@@ -53,16 +56,17 @@ public class EstadisticasBean {
         }
     }
     
-    public void CargarDetalle(){
+    public void CargarDetalle(int idSucursal){
         EstadisticaDaoImpl estadist = new EstadisticaDaoImpl();
         LEstadisticaDetalle = new ArrayList<Estadistica>();
         
-        List<Object[]> ListDatos = (List<Object[]>) estadist.CargarDetalle();
+        List<Object[]> ListDatos = (List<Object[]>) estadist.CargarDetalle(idSucursal);
         
         for (Object[] datos : ListDatos) {
             Estadistica est = new Estadistica();
             Servicio ser = new Servicio();
             
+            est.setIdestadistica((int) datos[0]);
             ser.setId((int)datos[0]);
             Double valorDecimal = new Double((double) datos[1]);
             int ValorEntero = valorDecimal.intValue();
@@ -75,6 +79,27 @@ public class EstadisticasBean {
             LEstadisticaDetalle.add(est);
 
         }
+        
+        LSerDetalle =  new ArrayList<Estadistica>();
+        LSerDetalle = estadist.findAll();
+    }
+    
+    public void onRowSelect(SelectEvent event){
+        Servicio est = (Servicio) event.getObject();
+        
+        FacesMessage msg = new FacesMessage("Selección", "" + est);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void onRowUnselect(UnselectEvent event){
+        FacesMessage msg = new FacesMessage("Selección", "" + ((Servicio) event.getObject()).getId());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void SeleccionarLink(int idServicio){
+        System.out.println("Servicio" + idServicio);
+        FacesMessage msg = new FacesMessage("Selección", "" + idServicio);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public Estadistica getEstadistica() {
@@ -99,6 +124,30 @@ public class EstadisticasBean {
 
     public void setLEstadisticaDetalle(List<Estadistica> LEstadisticaDetalle) {
         this.LEstadisticaDetalle = LEstadisticaDetalle;
+    }
+
+    public List<Servicio> getSelectedServicio() {
+        return SelectedServicio;
+    }
+
+    public void setSelectedServicio(List<Servicio> SelectedServicio) {
+        this.SelectedServicio = SelectedServicio;
+    }
+
+    public Servicio getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
+    }
+
+    public List<Estadistica> getLSerDetalle() {
+        return LSerDetalle;
+    }
+
+    public void setLSerDetalle(List<Estadistica> LSerDetalle) {
+        this.LSerDetalle = LSerDetalle;
     }
     
 }
