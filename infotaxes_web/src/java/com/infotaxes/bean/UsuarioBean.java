@@ -48,6 +48,7 @@ public class UsuarioBean {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido a la Comunidad: ", this.usuario.getLogin());
             FacesContext.getCurrentInstance().addMessage(null, msg);
             usuario = null;
+            this.mail = null;
         } catch (Exception e) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error Inesperado: ", e.getMessage() + "\n " + e.getLocalizedMessage());
             FacesContext.getCurrentInstance().addMessage(null, msg);
