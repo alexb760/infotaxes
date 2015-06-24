@@ -37,6 +37,13 @@
     
 }
 
+.body_background {
+    position: relative;
+     background-image: url(../img/background_body.png);
+     background-color: #ffffff;
+    padding: 5px;
+}
+
 
 .left_content {
     background-color: #dddddd;

@@ -25,7 +25,7 @@
                     </f:facet>
 
                     <p:menubar>
-                        <p:menuitem value="Inicio" url="index.xhtml" icon="ui-icon-home" />
+                        <p:menuitem value="Inicio" url="/view/index.xhtml" icon="ui-icon-home" />
                         <p:submenu label="Sucursal" icon="ui-icon-pencil">
                             <p:menuitem value="Crear" url="/view/infotaxes/sucursal_create.xhtml"/>
                             <p:menuitem value="Buscar" url="/view/infotaxes/sucursal_search.xhtml" />
@@ -71,7 +71,9 @@
         </div>
 
         <div id="content" class="center_content">
-            <ui:insert name="content"></ui:insert>
+            <ui:insert name="content">
+                
+            </ui:insert>
         </div>
 
         <div id="bottom" class="left_content">

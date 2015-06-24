@@ -5,9 +5,11 @@
  */
 package com.infotaxes.bean;
 
+import com.infotaxes.dao.ServicioDaoImpl;
 import com.infotaxes.dao.SucursalDaoImpl;
 import com.infotaxes.dao.TerritorioDaoImpl;
 import com.infotaxes.dao.TipoDaoImpl;
+import com.infotaxes.pojos.Servicio;
 import com.infotaxes.pojos.Sucursal;
 import com.infotaxes.pojos.Territorio;
 import com.infotaxes.pojos.Tipo;
@@ -19,6 +21,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.component.inputtext.InputText;
 
 
 @ManagedBean(name = "sucursalBean")
@@ -30,6 +33,9 @@ public class SucursalBean {
     public Sucursal create_suc;
     public List<Territorio> list_ciudad;
     
+    public List<Servicio> list_servicio;
+    public Servicio servicio;
+    
     @ManagedProperty("#{territorioImpl2}")
     private TerritorioDaoImpl territorioImpl;
     private Territorio territorio;
@@ -38,6 +44,8 @@ public class SucursalBean {
     private TipoDaoImpl tipoDaoImpl;
     private Tipo tipo;
     
+    private InputText txtNombre;
+    
     public SucursalBean() {
        // cargarObjetos();
     
@@ -45,7 +53,14 @@ public class SucursalBean {
     
     @PostConstruct
     public void init(){
-        //cargarObjetos();
+        cargarObjetos();
+        cargarServicios();
+        create_suc = new Sucursal();
+        servicio = new Servicio();
+        sucursal = new Sucursal();
+        txtNombre = new InputText();
+        txtNombre.setValue("");
+        
     }
     
     public void cargarObjetos() {
@@ -78,13 +93,33 @@ public class SucursalBean {
         
     }
     
+    
+        public void cargarServicios() {
+        ServicioDaoImpl servDao = new ServicioDaoImpl();
+        list_servicio = new ArrayList<Servicio>();
+
+        List<Object[]> ListDatos = (List<Object[]>) servDao.CargarServicios();
+
+        for (Object[] datos : ListDatos) {
+            Servicio ser = new Servicio();
+
+            ser.setId((int) datos[0]);
+            ser.setDescripcion(datos[1].toString());
+            ser.setValor(Double.parseDouble(datos[2].toString()));  
+            
+            list_servicio.add(ser);
+
+        }
+        
+        
+    }
+    
     public void guardar() throws Exception {
         try {
             
             SucursalDaoImpl sucursalImpl = new SucursalDaoImpl();
-           
-            sucursalImpl.create(sucursal);
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha creado sucursal : ", this.sucursal.getNombre());
+            sucursalImpl.create(create_suc);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha creado sucursal : ", this.create_suc.getNombre());
             FacesContext.getCurrentInstance().addMessage(null, msg);
             sucursal = null;
         } catch (Exception e) {
@@ -94,9 +129,10 @@ public class SucursalBean {
     }
     public void limpiar_Create(){
         
-        sucursal = null;
+        sucursal = new Sucursal();
+        servicio = new Servicio(); 
         getCiudades("");
-        getTipos();
+        getTipos("");
         
     }
     
@@ -105,9 +141,9 @@ public class SucursalBean {
         return territorioImpl.getbyType(query);
     }
     
-    public List<Tipo> getTipos(){
+    public List<Tipo> getTipos(String query){
         tipoDaoImpl = new TipoDaoImpl();
-        return tipoDaoImpl.findAll();
+        return tipoDaoImpl.getbyName(query);
     }
 
     public TipoDaoImpl getTipoDaoImpl() {
@@ -173,4 +209,30 @@ public class SucursalBean {
     public void setTerritorioImpl(TerritorioDaoImpl territorioImpl) {
         this.territorioImpl = territorioImpl;
     }
+
+    public List<Servicio> getList_servicio() {
+        return list_servicio;
+    }
+
+    public void setList_servicio(List<Servicio> list_servicio) {
+        this.list_servicio = list_servicio;
+    }
+
+    public Servicio getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
+    }
+
+    public InputText getTxtNombre() {
+        return txtNombre;
+    }
+
+    public void setTxtNombre(InputText txtNombre) {
+        this.txtNombre = txtNombre;
+    }
+    
+    
 }

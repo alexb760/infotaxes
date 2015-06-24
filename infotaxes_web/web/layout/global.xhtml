@@ -1,30 +1,94 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
-        <title>Info Taxes</title>
+        <title>InfoTaxes</title>
+        <h:graphicImage url="../resources/img/InfoTaxes2.png" width="1325px" height="300px"/>
     </h:head>
 
-    <h:body>
-
+    <body>        
         <div id="top">
-            <ui:insert name="top">Top</ui:insert>
+            <ui:insert name="top">
+                <h:form>
+                    <p:growl id="messages"/>    
+                    <f:facet name="top">
+                        <p:graphicImage name="/resources/img/header-background2.jpg" />
+                    </f:facet>
+
+                    <p:menubar>
+                        <p:menuitem value="Inicio" url="/view/index.xhtml" icon="ui-icon-home" />
+                        <p:submenu label="Sucursal" icon="ui-icon-pencil">
+                            <p:menuitem value="Crear" url="/view/infotaxes/sucursal_create.xhtml"/>
+                            <p:menuitem value="Buscar" url="/view/infotaxes/sucursal_search.xhtml" />
+                        </p:submenu>
+                        <p:submenu label="Estadisticas" icon="ui-icon-comment">
+                            <p:menuitem value="Comentarios por aprobar" url="/view/infotaxes/estadisticas.xhtml"/>
+                        </p:submenu>
+
+                        <f:facet name="options">
+                            <p:commandButton value="Login"  
+                                             oncomplete="PF('dlg').show()"
+                                             title="view">
+                            </p:commandButton>
+                        </f:facet>
+                    </p:menubar>    
+
+                </h:form>
+                <p:dialog id="dialog" header="Login" widgetVar="dlg" modal="true" showEffect="fade" hideEffect="fade">
+                    <h:form id="login">
+                        <p:outputPanel id="registroDetalle" style="text-align: center">
+                            <p:growl id="growl" showDetail="true" life="3000" />
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="username" value="Username: *" />
+                                <p:inputText value="#{sessionBean.login}" 
+                                             id="username" required="true" label="username" />
+
+                                <h:outputLabel for="password" value="Password: * " />
+                                <h:inputSecret value="#{sessionBean.pwd}" 
+                                               id="password" required="true" label="password" />
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Login" update="growl" 
+                                                     actionListener="#{sessionBean.login()}" 
+                                                     oncomplete="handleLoginRequest(xhr, status, args)"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:form>
+                </p:dialog>
+
+            </ui:insert>            
         </div>
 
         <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
+            <ui:insert name="content">
+                <h:graphicImage url="../resources/img/background_body.png" width="1200px" />
+            </ui:insert>
         </div>
 
-        <div id="bottom">
-            <ui:insert name="bottom">Bottom</ui:insert>
+        <div id="bottom" class="left_content">
+            <ui:insert name="bottom">&copy;Copyright Infotaxes By Student's Uniajc</ui:insert>
         </div>
-
-    </h:body>
-
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                }
+                else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+        </script>
+    </body>
 </html>
+

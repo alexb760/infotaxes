@@ -6,9 +6,12 @@
 package com.infotaxes.dao;
 
 import com.infotaxes.pojos.Territorio;
+import com.infotaxes.util.HibernateUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
 
 /**
  *
@@ -32,14 +35,28 @@ public class TerritorioDaoImpl extends GenericDaoImpl<Territorio, Integer> imple
      * @param name
      * @return
      */
-    public List<Territorio> getbyType(String tipo) {
+    public List<Territorio> getbyType(String name) {
+//        Query q;
+//        List<Territorio> ciudad = new ArrayList<Territorio>();
+//         try {
+//            session = HibernateUtil.getSession();
+//            tx = session.beginTransaction();
+//
+//            q = session.createQuery("select ter.id, ter.nombre from Territorio as ter where ter.tipo='C' " );
+//
+//            tx.commit();
+//        } catch (HibernateException e) {
+//            //list = null;
+//            tx.rollback();
+//            throw e;
+//        }
+//     
+//        return q.list();
+        
         List<Territorio> ciudad = new ArrayList<Territorio>();
         for (Territorio ci : super.findAll()) {
-
-            if (ci.getTipo().equals("C")) {
-                if (ci.getNombre().toUpperCase().startsWith(tipo.toUpperCase())) {
-                    ciudad.add(ci);
-                }
+            if (ci.getNombre().toLowerCase().startsWith(name.toLowerCase()) && ci.getTipo().equalsIgnoreCase("C")) {
+                ciudad.add(ci);
             }
         }
         return ciudad;
