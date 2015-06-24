@@ -56,4 +56,24 @@ public class EstadisticaDaoImpl extends GenericDaoImpl<Estadistica, Integer> imp
 
         return q.list();
     }
+    
+    public List<Estadistica> CargarComentarios(int idSucursal){
+        Query q;
+        
+        List<Estadistica> lst;
+        try {
+            session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+
+            lst = session.createQuery("From Estadistica as est where est.sucursal = " + idSucursal).list();
+
+            tx.commit();
+        } catch (HibernateException e) {
+            //list = null;
+            tx.rollback();
+            throw e;
+        }
+
+        return lst;
+    }
 }
