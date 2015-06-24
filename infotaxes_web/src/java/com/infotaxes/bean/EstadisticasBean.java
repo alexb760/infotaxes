@@ -85,7 +85,7 @@ public class EstadisticasBean {
         }
         
         LSerDetalle =  new ArrayList<Estadistica>();
-        LSerDetalle = estadist.findAll();
+        LSerDetalle = estadist.CargarComentarios(idSucursal);
     }
     
     public void onRowSelect(SelectEvent event){
